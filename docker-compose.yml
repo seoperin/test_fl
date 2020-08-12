@@ -1,0 +1,49 @@
+version: '3.3'
+services:
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: ./nginx/Dockerfile
+    container_name: fl_nginx
+    ports:
+      - 80:80
+    volumes:
+      - type: bind
+        source: .
+        target: /var/www
+    depends_on:
+      - postgres
+
+  php-fpm:
+    build:
+      context: ./docker
+      dockerfile: ./php/Dockerfile
+    container_name: fl_app
+    volumes:
+      - type: bind
+        source: .
+        target: /var/www
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_DB: fl
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    container_name: fl_redis
+    restart: always
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres:
