@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomePageController');
+Route::get('/', 'HomePageController')
+    ->name('home');
 
 Route::post('/checkInn', 'CheckInnController')
     ->name('checkInn');

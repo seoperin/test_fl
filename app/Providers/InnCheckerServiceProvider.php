@@ -20,8 +20,8 @@ class InnCheckerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('App\Services\Contracts\InnChecker', function ($app) {
-            return new InnCheckerFNS();
+        $this->app->bind('App\Services\Contracts\InnChecker', function () {
+            return new InnCheckerFNS;
         });
     }
 }
